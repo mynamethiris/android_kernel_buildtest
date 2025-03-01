@@ -22,7 +22,7 @@ jobs:
       - name: Setup Environment Variables
         run: |
           # Repositories:
-          echo "TOOLCHAIN_REPO=https://github.com/mynamethiris/android-kernel-tools" >> $GITHUB_ENV
+          echo "TOOLCHAIN_REPO=https://github.com/mynamethiris/android-kernel-tools.git" >> $GITHUB_ENV
           echo "KERNEL_SOURCE_REPO=https://github.com/mynamethiris/kernel_asus_X01BD.git" >> $GITHUB_ENV
           echo "ANYKERNEL_REPO=https://github.com/mynamethiris/AnyKernel3.git" >> $GITHUB_ENV
           echo "KERNELSU_SETUP_SCRIPT=https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next/kernel/setup.sh" >> $GITHUB_ENV
@@ -34,11 +34,11 @@ jobs:
           echo "LD_LIBRARY_PATH=$GITHUB_WORKSPACE/tools/clang/host/linux-x86/clang-r428724/lib64" >> $GITHUB_ENV
 
           # Cross-Compiler Prefixes:
-          echo "CROSS_COMPILE=$GITHUB_WORKSPACE/tools/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-" >> $GITHUB_ENV # Prefix for the aarch64 cross-compiler.
-          echo "CROSS_COMPILE_ARM32=$GITHUB_WORKSPACE/tools/gcc/linux-x86/arm/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-" >> $GITHUB_ENV # Prefix for the arm cross-compiler.
+          echo "CROSS_COMPILE=$GITHUB_WORKSPACE/tools/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-" >> $GITHUB_ENV
+          echo "CROSS_COMPILE_ARM32=$GITHUB_WORKSPACE/tools/gcc/linux-x86/arm/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-" >> $GITHUB_ENV
 
           # Build User and Host:
-          echo "USER=mynamethiris" >> $GITHUB_ENV # Username for the build process.
+          echo "USER=mynamethiris" >> $GITHUB_ENV
           echo "HOST=$(lsb_release -cs)" >> $GITHUB_ENV
 
           # Kernel Configuration and Branch:
@@ -83,10 +83,10 @@ jobs:
           O=out \
           ${{ env.BUILD_FLAGS }} \
           CROSS_COMPILE=${{ env.CROSS_COMPILE }} \
-          CROSS_COMPILE_ARM32=${{ env.CROSS_COMPILE_ARM32 }}" # Set the build flags
-          cd ${{ env.KERNEL_SOURCE_PATH }} # Change directory to the kernel source
+          CROSS_COMPILE_ARM32=${{ env.CROSS_COMPILE_ARM32 }}" 
+          cd ${{ env.KERNEL_SOURCE_PATH }}
           make ${FLAGS} ${{ env.DEFCONFIG }}
-          make -j$(nproc --all) ${FLAGS}      
+          make -j$(nproc --all) ${FLAGS}
       
       - name: Zip Kernel
         run: |
