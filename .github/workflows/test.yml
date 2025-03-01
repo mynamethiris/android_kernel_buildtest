@@ -43,7 +43,7 @@ jobs:
 
           # Kernel Configuration and Branch:
           echo "DEFCONFIG=X01BD_defconfig" >> $GITHUB_ENV
-          echo "KERNEL_BRANCH=test" >> $GITHUB_ENV
+          echo "KERNEL_BRANCH=test-ten" >> $GITHUB_ENV
           echo "ANYKERNEL_BRANCH=master" >> $GITHUB_ENV
           echo "BUILD_FLAGS=CC=clang AR=llvm-ar NM=llvm-nm AS=llvm-as STRIP=llvm-strip READELF=llvm-readelf OBJDUMP=llvm-objdump OBJCOPY=llvm-objcopy CLANG_TRIPLE=aarch64-linux-gnu-" >> $GITHUB_ENV
           
