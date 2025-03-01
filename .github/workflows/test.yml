@@ -23,7 +23,7 @@ jobs:
         run: |
           # Repositories:
           echo "TOOLCHAIN_REPO=https://github.com/mynamethiris/android-kernel-tools.git" >> $GITHUB_ENV
-          echo "KERNEL_SOURCE_REPO=https://github.com/mynamethiris/kernel_asus_X01BD.git" >> $GITHUB_ENV
+          echo "KERNEL_SOURCE_REPO=https://github.com/mynamethiris/kernel_asus_X01BD_test.git" >> $GITHUB_ENV
           echo "ANYKERNEL_REPO=https://github.com/mynamethiris/AnyKernel3.git" >> $GITHUB_ENV
           echo "KERNELSU_SETUP_SCRIPT=https://raw.githubusercontent.com/rifsxd/KernelSU-Next/next/kernel/setup.sh" >> $GITHUB_ENV
           
