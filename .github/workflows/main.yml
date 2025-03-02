@@ -77,10 +77,9 @@ jobs:
         run: |
           export KBUILD_BUILD_USER=${{ env.USER }}
           export KBUILD_BUILD_HOST=${{ env.HOST }}
-          export PATH=${{ env.CLANG_PATH }}:${PATH}
-          export PATH=${{ env.GCC_PATH }}:${PATH}
-          export PATH=${{ env.GCC32_PATH }}:${PATH}
+          export PATH=${{ env.CLANG_PATH }}:${{ env.GCC_PATH }}:${{ env.GCC32_PATH }}:${PATH}
           export LD_LIBRARY_PATH=${{ env.LD_LIBRARY_PATH }}:${LD_LIBRARY_PATH}
+
           FLAGS="ARCH=arm64 \
           O=out \
           ${{ env.BUILD_FLAGS }} \
@@ -110,8 +109,13 @@ jobs:
         id: get_info
         run: |
           cd ${{ env.KERNEL_SOURCE_PATH }}
-          KERNEL_NAME=$(grep -oP 'CONFIG_LOCALVERSION=\K.*' arch/arm64/configs/${{ env.DEFCONFIG }} | tr -d '"' | sed 's/-//g')
-          echo "KERNEL_NAME=$KERNEL_NAME" >> $GITHUB_ENV
+          if grep -q 'CONFIG_LOCALVERSION=' arch/arm64/configs/${{ env.DEFCONFIG }}; then
+            KERNEL_NAME=$(grep -oP 'CONFIG_LOCALVERSION=\K.*' arch/arm64/configs/${{ env.DEFCONFIG }} | tr -d '"' | sed 's/^-//')
+            echo "KERNEL_NAME=$KERNEL_NAME" >> $GITHUB_ENV
+          else
+            KERNEL_NAME="perf"
+            echo "KERNEL_NAME=$KERNEL_NAME" >> $GITHUB_ENV
+          fi
 
           KERNEL_VERSION=$(make kernelversion)
           echo "KERNEL_VERSION=$KERNEL_VERSION" >> $GITHUB_ENV
